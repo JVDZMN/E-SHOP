@@ -1,6 +1,8 @@
 // middleware.ts
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+
+
 const isPublicRoute = createRouteMatcher([
   "/",                  // Home page
   "/about",             // Public about page
