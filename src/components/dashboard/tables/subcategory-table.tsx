@@ -1,4 +1,3 @@
-// ✅ File: components/dashboard/tables/subcategory-table.tsx
 
 import DataTable from "@/components/ui/data-table";
 import { SubCategory } from "@prisma/client";

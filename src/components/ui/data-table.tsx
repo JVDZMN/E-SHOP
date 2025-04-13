@@ -168,7 +168,6 @@ export default function DataTable<TData extends { url?: string }, TValue>({
                 <TableRow
                   key={row.id}
                   className="hover:bg-muted/50 transition cursor-pointer"
-                  onClick={() => row.original.url && router.push(`/dashboard/admin/categories/${row.original.url}`)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="max-w-[400px] break-words">
