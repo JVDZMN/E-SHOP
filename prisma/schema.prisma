@@ -37,6 +37,24 @@ model Category {
   image       String
   url         String
   featured    Boolean @default(false)
+
+  subCategories SubCategory[] @relation("CategoryToSubCategory")
+
   createdAt   DateTime @default(now())
-  updatedAt   DateTime 
+  updatedAt   DateTime @updatedAt
+
+}
+
+model SubCategory {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  image       String
+  url         String
+  featured    Boolean @default(false)
+  categoryId  String  @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  Category Category  @relation("CategoryToSubCategory" , fields: [categoryId],references: [id])
+  @@index([categoryId])
 }

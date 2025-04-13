@@ -1,27 +1,36 @@
 import { z } from "zod";
 
+// Catgeory form schema
 export const categorySchema = z.object({
   name: z
-    .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be at most 50 characters")
-    .regex(/^[A-Za-z0-9\s\-]+$/, "Name can only contain letters, numbers, spaces, and dashes"),
-
+    .string({
+      required_error: "Category name is required.",
+      invalid_type_error: "Category nale must be a string.",
+    })
+    .min(2, { message: "Category name must be at least 2 characters long." })
+    .max(50, { message: "Category name cannot exceed 50 characters." })
+    .regex(/^[a-zA-Z0-9\s'&-]+$/, {
+      message:
+        "Only letters, numbers, and spaces are allowed in the category name.",
+    }),
   image: z
-    .string()
-    .url("Image must be a valid URL")
-    .regex(/\.(jpg|jpeg|png|webp|svg)$/i, "Image URL must end with .jpg, .png, .svg, etc."),
-
+    .object({
+      url: z.string(),
+    })
+    .array()
+    .length(1, "Choose a category image."),
   url: z
-    .string()
-    .min(3, "URL slug must be at least 3 characters")
-    .max(100, "URL slug must be at most 100 characters")
-    .regex(
-      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-      "URL must be lowercase, alphanumeric, and may include hyphens (no spaces)"
-    ),
-
-  featured: z.boolean().optional(),
+    .string({
+      required_error: "Category url is required",
+      invalid_type_error: "Category url must be a string",
+    })
+    .min(2, { message: "Category url must be at least 2 characters long." })
+    .max(50, { message: "Category url cannot exceed 50 characters." })
+    .regex(/^(?!.*(?:[-_ ]){2,})[a-zA-Z0-9_-]+$/, {
+      message:
+        "Only letters, numbers, hyphen, and underscore are allowed in the category url, and consecutive occurrences of hyphens, underscores, or spaces are not permitted.",
+    }),
+  featured: z.boolean(),
 });
 
 export type CategoryFormValues = z.infer<typeof categorySchema>;
